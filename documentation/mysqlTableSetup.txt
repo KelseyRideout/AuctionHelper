@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS UniqueItem( 
+ItemID int NOT NULL AUTO_INCREMENT, 
+ItemName varchar(80),
+ItemDescription varchar(255),
+ItemPicture varchar(150),
+PRIMARY KEY (ItemID)
+);
+
+CREATE TABLE IF NOT EXISTS Auction(
+AuctionID int NOT NULL AUTO_INCREMENT,
+StartDate datetime,
+EndDate datetime,
+PRIMARY KEY (AuctionID)
+);
+
+CREATE TABLE IF NOT EXISTS Winner(
+WinnerID int NOT NULL AUTO_INCREMENT,
+WinnerName varchar(80),
+PRIMARY KEY (WinnerID)
+);
+
+CREATE TABLE IF NOT EXISTS AuctionItem(
+AuctionItemID int NOT NULL AUTO_INCREMENT,
+AuctionID int,
+ItemID int,
+PRIMARY KEY (AuctionItemID),
+FOREIGN KEY (AuctionID) REFERENCES Auction(AuctionID),
+FOREIGN KEY (ItemID) REFERENCES UniqueItem(ItemID)
+);
+
+CREATE TABLE IF NOT EXISTS ItemWinner(
+ItemWinnerID int NOT NULL AUTO_INCREMENT,
+WinnerID int,
+AuctionItemID int,
+WinningBid int,
+PRIMARY KEY (ItemWinnerID),
+FOREIGN KEY (WinnerID) REFERENCES Winner(WinnerID),
+FOREIGN KEY (AuctionItemID) REFERENCES AuctionItem(AuctionItemID)
+);
